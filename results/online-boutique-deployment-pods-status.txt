@@ -1,0 +1,14 @@
+$ kubectl get pods
+NAME                                     READY   STATUS    RESTARTS      AGE
+checkoutservice-654c47f4b6-mxxdv         2/2     Running   2 (27m ago)   16h
+emailservice-5b9fff7cb8-7lqvp            2/2     Running   2 (27m ago)   16h
+shippingservice-5488d5b6cb-bkpst         2/2     Running   2 (27m ago)   16h
+productcatalogservice-557ff44b96-g6sb7   2/2     Running   2 (27m ago)   16h
+redis-cart-5b569cd47-xznw4               2/2     Running   5 (25m ago)   16h
+recommendationservice-64dc9dfbc8-qq79d   2/2     Running   2 (27m ago)   16h
+currencyservice-59bc889674-gbx62         2/2     Running   2 (27m ago)   16h
+frontend-77b88cc7cb-vs4m8                2/2     Running   2 (27m ago)   16h
+paymentservice-68dd9755bb-fw2jl          2/2     Running   2 (27m ago)   16h
+cartservice-c77f6b866-c7kbh              2/2     Running   4 (25m ago)   16h
+loadgenerator-6958f5bc8b-28t4w           2/2     Running   2 (27m ago)   16h
+adservice-85598d856b-8khzj               2/2     Running   0             16h
