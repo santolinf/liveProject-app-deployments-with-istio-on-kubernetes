@@ -1,2 +1,7 @@
 .idea
 
+# ignore generated tls keys and certificate files, including generated Kubernetes resource files
+tls/*.yaml
+tls/*.crt
+tls/*.key
+tls/*csr
