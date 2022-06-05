@@ -1,0 +1,73 @@
+CONNECTED(00000144)
+---
+Certificate chain
+ 0 s:CN = marketplace.boutiquestore.com, O = boutiquestore
+   i:O = boutiquestore Inc., CN = boutiquestore.com
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIC7TCCAdUCAQAwDQYJKoZIhvcNAQELBQAwOTEbMBkGA1UECgwSYm91dGlxdWVz
+dG9yZSBJbmMuMRowGAYDVQQDDBFib3V0aXF1ZXN0b3JlLmNvbTAeFw0yMjA2MDQx
+ODE4MjBaFw0yMzA2MDQxODE4MjBaMEAxJjAkBgNVBAMMHW1hcmtldHBsYWNlLmJv
+dXRpcXVlc3RvcmUuY29tMRYwFAYDVQQKDA1ib3V0aXF1ZXN0b3JlMIIBIjANBgkq
+hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuawDbo/TfMsSpxB9BEm2ZMrJR885zHED
+HqVL3zXBHGJlrxRjygaSSpk/acFkBqGtAid1Fenwgg1ewdATZQjc2xxndZet3XGf
+bhMI6XkQKcL5d9KiuqRuayMP13OpxErXQDd5OkvvmxRYfFyR8xRMo1E1IVYumNbr
+i0+MWwe56PZzE9vWbPC60V/2y97yOeWvGiVnivNeRSxBzARn+88xwsKqda7G3wCp
+7LmxRcrLs6+Q1AfdmURP0DJUqZXs+VoCWIDgMKIxXLSTg0jyJAOaqXy+FaWYK6ge
+KUOOJMybbJNQ+hdZx4KyDeV5Dj/X6lTwhpSiBkPv2SHLpQwNhHIE5QIDAQABMA0G
+CSqGSIb3DQEBCwUAA4IBAQBzpYfTQUwnVRZVKThCwPOE4+DZt/qZOSM2S6eu5OLX
+7PFLAwdMnNItD2bvCW9rybVM9Pyvdbh9QBCdYHsrdVpUfWURibqok8ju40GQc9zd
+cD4J3AATL5Gh3mN4bouD7sadla+sWMB/Yo8cY/geaSLOADJgjLV2TGpkgw07uih2
+dqMeEC7TEfpucwU5ifKCJobeGn0+2fjmudZiyjlRcMR3gNT0zVVyDtM5M/AuVKX/
+l7FAir0GTdL3qO36xU8hg/nwjy9R13cU0Fevog4ebaRWzxlCCwz594wpKr1H+HrG
+mZaHEmp1A2j7XWYPMRbCnkRBsgHPBieHXlOoLyeY2/9v
+-----END CERTIFICATE-----
+subject=CN = marketplace.boutiquestore.com, O = boutiquestore
+
+issuer=O = boutiquestore Inc., CN = boutiquestore.com
+
+---
+No client certificate CA names sent
+Peer signing digest: SHA256
+Peer signature type: RSA-PSS
+Server Temp Key: X25519, 253 bits
+---
+SSL handshake has read 1400 bytes and written 317 bytes
+Verification: OK
+---
+New, TLSv1.2, Cipher is ECDHE-RSA-CHACHA20-POLY1305
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-CHACHA20-POLY1305
+    Session-ID: A5D105A235320DDE396332A10B7D4E2C6A0F33FC870F7D33C7333D0570969A51
+    Session-ID-ctx: 
+    Master-Key: 980E2785513D221AD81B811C9828F8D722A030F0D72A2BF9CB830E6A2B57EE8923209709A411456664BB4D8873872441
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 7200 (seconds)
+    TLS session ticket:
+    0000 - 47 8d da 01 88 70 89 68-89 cf 4e e6 35 17 5d 09   G....p.h..N.5.].
+    0010 - cd 4a 11 20 c6 eb 0c b9-5c 76 6d 37 c6 9d 53 e0   .J. ....\vm7..S.
+    0020 - ad 49 30 49 af c0 6f e0-02 62 c2 38 dd b1 3b e7   .I0I..o..b.8..;.
+    0030 - ef 5a 41 84 08 23 85 df-ee 78 0b ed 98 8b f4 49   .ZA..#...x.....I
+    0040 - 06 f4 2c 5a 46 7e fa 99-df a5 c8 9e 5b f4 80 e2   ..,ZF~......[...
+    0050 - f2 39 b3 c8 47 16 45 bb-52 05 0c ac 72 42 9a bc   .9..G.E.R...rB..
+    0060 - 18 47 84 8b 4d ed 6a b3-f2 2f 1c 54 5b b4 15 d9   .G..M.j../.T[...
+    0070 - ae 8c f0 3d 16 a3 13 e9-00 c4 dd 60 f6 90 c5 cf   ...=.......`....
+    0080 - 6c 27 51 c4 48 91 18 36-57 fe 2e 6c 4b df 46 46   l'Q.H..6W..lK.FF
+    0090 - f3 39 9d cd 03 e0 d5 53-70 04 a8 b3 07 0a 4b 33   .9.....Sp.....K3
+    00a0 - 6e 1c 49 62 fc 7d af 6f-8b ab cf c6 c4 c4 f3 17   n.Ib.}.o........
+    00b0 - 44 8f 8a 64 5c e8 1b e4-0a 44 90 12 a8 6d ca 25   D..d\....D...m.%
+
+    Start Time: 1654437627
+    Timeout   : 7200 (sec)
+    Verify return code: 0 (ok)
+    Extended master secret: yes
+---
