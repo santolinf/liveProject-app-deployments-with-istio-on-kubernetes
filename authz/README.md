@@ -476,7 +476,7 @@ spec:
       notValues: ["boutiquestore.com"]
     to:
     - operation:
-        ports: ["443"]
+        ports: ["8443"]
         paths: ["/cart"]
 ```
 
@@ -508,21 +508,115 @@ curl -v -sS --write-out "%{http_code}" -o /dev/null http://$INGRESS:80/cart
 * Connection #0 to host 192.168.1.41 left intact
 ```
 
+> :warning: my initial answer was to configure `ports: ["443"]` which is incorrect. See 
+> instructor solution below.
 
-**Note**: with my deployed version of Istio *1.10* on __microk8s__ I have noticed that
-the `ports` field does not apply the policy to requests with port __443__; this is possibly due to the way I had
-to enable and configure the __metallb__ loadbalancer on __microk8s__.
+The updated Authorization policy specifies the port “8443” in the operation field which scopes down the 
+policy to only take effect when the request is made to service port "443" while preserving the other 
+conditions.
+
+Note that port "8443" is used here instead of "443". The Authorization policy resource's port field maps 
+to the workload port i.e. the target port of the "istio-ingressgateway" service in this scenario which is 
+"8443" for service port "443".
+
+If you incorrectly use service port "443" instead of "8443", you will see that traffic at both service 
+ports "80" and "443" to "/cart" path is accepted without a valid JWT token as the policy should be 
+applied for the workload port.
 
 ```shell
-$ microk8s.kubectl get svc -n istio-system
-NAME                   TYPE           CLUSTER-IP      EXTERNAL-IP    PORT(S)                                                                      AGE
-istiod                 ClusterIP      10.152.183.59   <none>         15010/TCP,15012/TCP,443/TCP,15014/TCP                                        53d
-istio-egressgateway    ClusterIP      10.152.183.69   <none>         80/TCP,443/TCP                                                               53d
-istio-ingressgateway   LoadBalancer   10.152.183.48   192.168.1.41   15021:32102/TCP,80:32394/TCP,443:30543/TCP,31400:31766/TCP,15443:30332/TCP   53d
+$ microk8s.kubectl get svc istio-ingressgateway -n istio-system -o json
+{
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": {
+        "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"istio-ingressgateway\",\"install.operator.istio.io/owning-resource\":\"unknown\",\"install.operator.istio.io/owning-resource-namespace\":\"istio-system\",\"istio\":\"ingressgateway\",\"istio.io/rev\":\"default\",\"operator.istio.io/component\":\"IngressGateways\",\"operator.istio.io/managed\":\"Reconcile\",\"operator.istio.io/version\":\"1.10.3\",\"release\":\"istio\"},\"name\":\"istio-ingressgateway\",\"namespace\":\"istio-system\"},\"spec\":{\"ports\":[{\"name\":\"status-port\",\"port\":15021,\"protocol\":\"TCP\",\"targetPort\":15021},{\"name\":\"http2\",\"port\":80,\"protocol\":\"TCP\",\"targetPort\":8080},{\"name\":\"https\",\"port\":443,\"protocol\":\"TCP\",\"targetPort\":8443},{\"name\":\"tcp\",\"port\":31400,\"protocol\":\"TCP\",\"targetPort\":31400},{\"name\":\"tls\",\"port\":15443,\"protocol\":\"TCP\",\"targetPort\":15443}],\"selector\":{\"app\":\"istio-ingressgateway\",\"istio\":\"ingressgateway\"},\"type\":\"LoadBalancer\"}}\n"
+        },
+        "creationTimestamp": "2022-05-03T08:01:38Z",
+        "labels": {
+            "app": "istio-ingressgateway",
+            "install.operator.istio.io/owning-resource": "unknown",
+            "install.operator.istio.io/owning-resource-namespace": "istio-system",
+            "istio": "ingressgateway",
+            "istio.io/rev": "default",
+            "operator.istio.io/component": "IngressGateways",
+            "operator.istio.io/managed": "Reconcile",
+            "operator.istio.io/version": "1.10.3",
+            "release": "istio"
+        },
+        "name": "istio-ingressgateway",
+        "namespace": "istio-system",
+        "resourceVersion": "1013118",
+        "selfLink": "/api/v1/namespaces/istio-system/services/istio-ingressgateway",
+        "uid": "8621dbaa-29de-4e73-aa47-fd22657d1ea0"
+    },
+    "spec": {
+        "allocateLoadBalancerNodePorts": true,
+        "clusterIP": "10.152.183.48",
+        "clusterIPs": [
+            "10.152.183.48"
+        ],
+        "externalTrafficPolicy": "Cluster",
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+            "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+            {
+                "name": "status-port",
+                "nodePort": 32102,
+                "port": 15021,
+                "protocol": "TCP",
+                "targetPort": 15021
+            },
+            {
+                "name": "http2",
+                "nodePort": 32394,
+                "port": 80,
+                "protocol": "TCP",
+                "targetPort": 8080
+            },
+            {
+                "name": "https",
+                "nodePort": 30543,
+                "port": 443,
+                "protocol": "TCP",
+                "targetPort": 8443
+            },
+            {
+                "name": "tcp",
+                "nodePort": 31766,
+                "port": 31400,
+                "protocol": "TCP",
+                "targetPort": 31400
+            },
+            {
+                "name": "tls",
+                "nodePort": 30332,
+                "port": 15443,
+                "protocol": "TCP",
+                "targetPort": 15443
+            }
+        ],
+        "selector": {
+            "app": "istio-ingressgateway",
+            "istio": "ingressgateway"
+        },
+        "sessionAffinity": "None",
+        "type": "LoadBalancer"
+    },
+    "status": {
+        "loadBalancer": {
+            "ingress": [
+                {
+                    "ip": "192.168.1.41"
+                }
+            ]
+        }
+    }
+}
 ```
-
-(:warning:) The following HTTPS request succeeds with HTTP 200 OK response code rather than
-HTTP 403 Forbidden.
 
 ```shell
 curl -sS -H "Host: marketplace.boutiquestore.com" \
@@ -530,5 +624,5 @@ curl -sS -H "Host: marketplace.boutiquestore.com" \
     --resolve "marketplace.boutiquestore.com:443:$INGRESS_IP" \
     --write-out "%{http_code}" -o /dev/null \
     "https://marketplace.boutiquestore.com:443/cart"
-200
+403
 ```
