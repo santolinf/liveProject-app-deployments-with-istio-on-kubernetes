@@ -37,7 +37,7 @@ kubectl get istiooperator -n istio-system -o jsonpath='{.items[0].spec.profile}'
 demo
 ```
 
-The default installation settings for `meshConfig` is:
+The current settings for `meshConfig` is:
 ```shell
 kubectl get istiooperator -n istio-system -o jsonpath='{.items[0].spec.meshConfig}'
 ```
